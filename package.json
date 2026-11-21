@@ -1,0 +1,6 @@
+{
+  "name": "mariana-tamashiro-portfolio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {"build": "python3 scripts/build.py", "check": "python3 scripts/check.py"}
+}
