@@ -25,4 +25,8 @@
 
 ## Publishing status
 
-The code is prepared for GitHub Pages. Repository creation needs a signed-in GitHub browser session; the connected GitHub tool cannot create repositories. No GitHub repository or Pages deployment is claimed until those operations are verified.
+Repository created: https://github.com/maritamashiro/portfolio
+
+First successful deployment verified: https://maritamashiro.github.io/portfolio/
+
+Publishing uses GitHub Actions on main. The custom domain is not connected. The initial downloadable ZIP predates repository creation; the GitHub repository is the current source of truth.

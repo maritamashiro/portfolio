@@ -40,7 +40,7 @@ The build uses relative URLs, so the website works both under a GitHub repositor
 5. The completed deployment reports the live URL. Check it before changing domain settings.
 6. Connect `marianatamashiro.com` only when the site is ready; configure the custom domain and its DNS records then.
 
-No live deployment or domain change has been made by creating these source files.
+The first version is published at https://maritamashiro.github.io/portfolio/ from https://github.com/maritamashiro/portfolio. GitHub Actions builds and deploys changes to main. The custom domain has not been connected.
 
 ## Fonts
 
