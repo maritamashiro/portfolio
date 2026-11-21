@@ -44,7 +44,7 @@ The first version is published at https://maritamashiro.github.io/portfolio/ fro
 
 ## Fonts
 
-Courier Prime Regular/Bold are the chosen text fonts. Kalam Bold is an **interim open-license display font**, not the approved Pastel Crayon. Pastel Crayon's available sample is personal-use-only and is deliberately excluded. Once the correct web license is obtained, add the licensed webfont, change the `Hand` face in CSS, and review all heading line breaks. Keep the license files with distributed fonts.
+Courier Prime Regular/Bold are the text fonts. The display face is the Pastel Crayon TTF supplied by Mariana, replacing the interim Kalam face. Its original font metadata is preserved. Keep font licensing records with the project; the uploaded archive contained the TTF only.
 
 ## Image provenance
 

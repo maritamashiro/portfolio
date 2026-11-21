@@ -13,7 +13,7 @@
 
 ## Still to refine
 
-- Replace Kalam with correctly licensed Pastel Crayon; refine handwritten name asset.
+- Pastel Crayon has replaced Kalam using Mariana’s supplied TTF. Further refine the handwritten name asset if desired.
 - Replace provisional SVG project symbols with Mariana's own sketches/cutouts. Current symbols are visual proposals, not documentary photos.
 - Complete Work curation, especially additional art/research projects; avoid adding filler. Some unmigrated projects currently open their original Wix pages and are labelled as archive links in accessible names.
 - Review newly condensed project copy, author credits, and exhibition details before public launch.
