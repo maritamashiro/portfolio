@@ -1,12 +1,15 @@
 """Build a portable static portfolio using Python's standard library only."""
 from pathlib import Path
 import shutil
+import hashlib
 from html import escape
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'dist'
 OUT.mkdir(exist_ok=True)
 shutil.copytree(ROOT / 'public', OUT, dirs_exist_ok=True)
+STYLE_VERSION = hashlib.sha256((ROOT / 'public/style.css').read_bytes()).hexdigest()[:10]
+SCRIPT_VERSION = hashlib.sha256((ROOT / 'public/site.js').read_bytes()).hexdigest()[:10]
 
 ICONS = {
 'leaf': '<path d="M25 139 Q6 49 141 22 Q155 117 25 139Z" fill="#dce4cc"/><path d="M19 151 121 40M48 115 40 75M70 94 110 93M91 73 86 44"/><path d="M38 126 68 109 61 87 96 69 100 51" stroke="#b87349" stroke-width="7"/><circle cx="41" cy="125" r="12" fill="#b5b1a6"/><path d="M95 45h11v13H95Z" fill="#f5d66f"/>',
@@ -38,7 +41,7 @@ def page(route, title, body, active='', desc='The portfolio of Mariana Tamashiro
     base='../'*depth
     links=''.join(f'<a href="{base}{path}"'+(' aria-current="page"' if label==active else '')+f'>{label.lower()}</a>' for path,label in NAV)
     html=f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#faf6ee"><title>{escape(title)} · Mariana Tamashiro</title><meta name="description" content="{escape(desc,quote=True)}"><link rel="icon" href="{base}assets/favicon.svg" type="image/svg+xml"><link rel="preload" href="{base}fonts/courier-prime-regular.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="{base}style.css"><script src="{base}site.js" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#faf6ee"><title>{escape(title)} · Mariana Tamashiro</title><meta name="description" content="{escape(desc,quote=True)}"><link rel="icon" href="{base}assets/favicon.svg" type="image/svg+xml"><link rel="preload" href="{base}fonts/courier-prime-regular.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="{base}style.css?v={STYLE_VERSION}"><script src="{base}site.js?v={SCRIPT_VERSION}" defer></script></head>
 <body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><a href="{base or './'}" class="signature" aria-label="Mariana Tamashiro, home">MARIANA<br>TAMASHIRO</a><button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button><nav id="navigation" class="site-nav" aria-label="Main navigation">{links}</nav></header>
 <main id="main">{body.replace('{base}',base)}</main><footer class="site-footer"><span>Mariana Tamashiro · made with curiosity</span><a href="mailto:mari.tamashiro@gmail.com">Let's make something together</a></footer>
 <dialog class="viewer" id="image-viewer" aria-label="Enlarged image"><button class="viewer-close">Close</button><img alt=""><p class="viewer-caption"></p></dialog></body></html>'''
