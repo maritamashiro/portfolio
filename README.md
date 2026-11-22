@@ -18,6 +18,7 @@ Open http://localhost:8000. After changes, run the build again and refresh the b
 
 | File or folder | Purpose |
 | --- | --- |
+| `content/portfolio-project-questions.md` | Homepage project names, questions, and display order |
 | `scripts/build.py` | Page content, shared layout, project links, and illustrated SVG tokens |
 | `public/style.css` | Palette, typography, layouts, responsive rules, halos |
 | `public/site.js` | Mobile menu, image enlargement, manual carousel |

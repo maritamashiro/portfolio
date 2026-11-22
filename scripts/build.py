@@ -2,6 +2,7 @@
 from pathlib import Path
 import shutil
 import hashlib
+import re
 from html import escape
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,10 @@ ICONS = {
 'heart': '<path d="M83 133 19 63 36 29 66 25 83 45 104 25 133 29 150 63Z" stroke="#b95c5c"/><path d="M19 63 66 25 83 133 104 25 150 63M19 63 83 45 150 63" stroke="#b95c5c"/>',
 'pencil': '<path d="m54 137 6-97 11-22 9 23-7 98Z"/><path d="m60 40 20 1M61 128l13 1M70 20l1 11"/><path d="m98 142 2-93 11-21 10 23-10 94Z"/><path d="m100 49 21 2M101 132l11 1"/>',
 'flower': '<path d="M82 137Q63 88 89 63M89 63Q53 57 58 32Q73 18 88 44Q94 9 111 23Q125 41 104 54Q142 43 144 65Q140 88 106 70Q121 100 99 102Q82 96 89 63Z"/><path d="M77 112Q39 117 41 91Q68 86 77 112Z"/>',
+ 'ornament': '<path d="M54 29Q77 9 105 30L122 69Q120 123 83 140Q39 117 42 70Z" stroke="#b87349"/><path d="M54 29Q85 64 105 30M43 74Q79 98 120 70M53 112Q82 91 110 115"/><circle cx="82" cy="61" r="8" fill="#e9a070"/>',
+'connected': '<path d="M30 85H88L82 132H39ZM88 97Q121 86 113 109Q108 119 86 116M48 66Q36 53 49 39M67 66Q56 52 69 39M109 51Q122 38 137 51M100 39Q123 15 147 38"/><circle cx="123" cy="61" r="3" fill="#eb007a"/>',
+'installation': '<path d="M24 56 79 29 146 48 90 78ZM24 56V133L90 152V78M90 152 146 120V48"/><path d="M44 88 67 96 64 119 41 110Z" fill="#dce4cc"/><circle cx="114" cy="100" r="15" fill="#e9a070"/><path d="m48 48 13-7 10 5-13 7Z" fill="#eb007a"/>',
+'typewriter': '<path d="M46 62 43 18 123 21 120 63M27 64 139 62 153 132 15 132ZM40 76 128 76 136 113 30 114ZM41 124H122M56 33H111M56 45H97M23 58H39M128 56H145"/><path d="M43 86H125M38 98H131M53 77 48 112M70 77 67 112M88 77 88 112M105 77 109 112"/>',
 'arrow': '<path d="M22 142Q124 114 119 29M93 47 120 25 140 52" stroke="#eb007a" stroke-width="4"/>',
 }
 
@@ -47,17 +52,33 @@ def page(route, title, body, active='', desc='The portfolio of Mariana Tamashiro
 <dialog class="viewer" id="image-viewer" aria-label="Enlarged image"><button class="viewer-close">Close</button><img alt=""><p class="viewer-caption"></p></dialog></body></html>'''
     dest=OUT/route/'index.html';dest.parent.mkdir(parents=True,exist_ok=True);dest.write_text(html)
 
-def shelf_object(label, href, token):
-    return f'<a class="shelf-object" href="{{base}}{href}" aria-label="{label}">{token}<span class="object-label">{label}</span></a>'
+# The Markdown document controls homepage project names, questions, and order.
+PROJECTS = re.findall(r'^## (.+)\n+([^\n]+)', (ROOT/'content/portfolio-project-questions.md').read_text(), re.M)
+QUESTIONS = dict(PROJECTS)
+PRESENTATION = {
+    'Xenoflora Olfacta': ('xenoflora', None),
+    'Beyond Ornaments': ('beyond-ornaments', 'ornament'),
+    'Creature Kit': ('creature-kit', 'creature'),
+    'Teaching IoT': ('teaching-iot', 'connected'),
+    'Face Hacking': ('face-hacking', 'mask'),
+    'Immersive Coding': ('immersive-coding', 'installation'),
+    'Tinker Forest': ('tinker-forest', 'leaf'),
+    'Talk to Me': ('talk-to-me', 'typewriter'),
+}
+if set(QUESTIONS) != set(PRESENTATION):
+    raise ValueError('Each selected project needs its own route and visual token.')
+
+def shelf_object(name, question):
+    route, symbol = PRESENTATION[name]
+    token = icon(symbol) if symbol else image('xenoflora-cutout.webp', '', lazy=False)
+    label = escape(name+': '+question, quote=True)
+    return f'<a class="shelf-object" href="{{base}}work/{route}/" aria-label="{label}">{token}<span class="object-label">{escape(name)}<span class="object-question">{escape(question)}</span></span></a>'
 
 def shelf(items):
     return '<div class="shelf-row">'+''.join(items)+'<svg class="shelf-line" viewBox="0 0 900 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7Q90 2 172 6T350 6T520 7T710 6T898 8M6 9Q180 6 340 8T650 9T894 10" stroke="currentColor" stroke-width="1" fill="none"/></svg></div>'
 
-xeno_token=image('xenoflora-cutout.webp','',lazy=False)
-home_shelves = shelf([shelf_object('Xenoflora Olfacta','work/xenoflora/',xeno_token),shelf_object('Design and fabrication','work/xenoflora/#design',icon('heart')),shelf_object('On my desk','on-my-desk/',icon('shell'))])
-home_shelves += shelf([shelf_object('Tinker Forest','work/tinker-forest/',icon('leaf')),shelf_object('Creative learning','work/tinker-forest/',icon('creature')),shelf_object('Illustration','illustration/',icon('flower'))])
-home_shelves += shelf([shelf_object('Research and experiments','work/#research',icon('eye')),shelf_object('Live illustration','illustration/live/',icon('paper')),shelf_object('Get in touch','contact/',icon('pencil'))])
-page('', 'Home',f'<div class="home"><section class="home-intro"><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="work/">Explore my work</a></section><section class="cabinet" aria-label="A cabinet of projects and curiosities">{home_shelves}</section></div>')
+home_shelves = ''.join(shelf([shelf_object(name,question) for name,question in PROJECTS[start:start+3]]) for start in range(0,len(PROJECTS),3))
+page('', 'Home',f'<div class="home"><section class="home-intro"><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="work/">Explore my work</a></section><section class="cabinet" aria-label="Selected projects">{home_shelves}</section></div>')
 
 def project_object(label, href, main, fragment, second='paper'):
     url = href if href.startswith('https://') else '{base}'+href
@@ -75,14 +96,23 @@ page('work','Work','<header class="page-opening"><h1 class="display">Work</h1><p
 def project_header(title, subtitle, authors, description):
     return '<p class="breadcrumb"><a href="{base}work/">Work</a> / '+title+'</p>'+f'<header class="project-heading"><h1 class="display">{title}</h1><p class="project-subtitle">{subtitle}</p><p class="authors">A project by {authors}</p><p class="project-description">{description}</p></header>'
 
-xeno=project_header('Xenoflora Olfacta','What if we could encounter an alien life form through smell?','Mariana Tamashiro, Louis Badr, Geetanjali Minsky, and Edward Zhaozheng Liu.','An imagined flower invites a close sensory encounter. Translucent bioplastic petals, a levitating vessel, and a specially composed scent bring a speculative life form into the room.')
+xeno=project_header('Xenoflora Olfacta',QUESTIONS['Xenoflora Olfacta'],'Mariana Tamashiro, Louis Badr, Geetanjali Minsky, and Edward Zhaozheng Liu.','An imagined flower invites a close sensory encounter. Translucent bioplastic petals, a levitating vessel, and a specially composed scent bring a speculative life form into the room.')
 xeno+='<section class="experience" aria-label="Encountering Xenoflora">'+photo('xenoflora-paper-0-0.webp','Xenoflora: a visitor encounters the flower, its enclosure, and the levitating blue plant.','primary')+photo('xenoflora-enclosure.webp','The blue flower inside its organic white enclosure.','detail')+'<div class="cutout">'+image('xenoflora-cutout.webp','Curled translucent blue bioplastic petals in their vessel.')+'</div><p class="annotation">a closer encounter '+icon('arrow')+'</p></section>'
 xeno+='<div class="project-body"><section class="project-section" id="design"><h2>Design and fabrication</h2><p class="section-intro">The form brings together material exploration, parametric design, and physical interaction. Each element contributes to the impression of a living specimen from somewhere unfamiliar.</p><h3>Materials and form</h3><p>Alginate bioplastics give the petals their translucent, crystalline appearance. A magnetically levitating vessel holds the flower inside a white Voronoi enclosure, developed with Rhino and Grasshopper.</p>'+image('xenoflora-sketch.webp','Original development sketches of the enclosure, flower, vessel, and scent elements.','sketch-wide')+'<div class="process-block">'+photo('xenoflora-flower.webp','The curled bioplastic flower in its white vessel.')+'<div class="text"><h3>Working with translucency</h3><p>Curled surfaces catch and transmit light. The material becomes part of the imagined organism: delicate, unfamiliar, and visibly made.</p><p class="annotation">folds, light, and a little uncertainty</p></div></div><div class="process-block" id="interaction"><div class="text"><h3>Scent and interaction</h3><p>Scent offers another way to meet the flower. A specially composed fragrance becomes part of its identity, inviting visitors to come closer and imagine its world.</p><p>A XIAO microcontroller and capacitive sensing support the interaction, while light contributes to its quiet, living presence.</p></div>'+photo('xenoflora-levitation.webp','The bioplastic flower in its magnetically levitating vessel.')+'</div></section><section class="project-section"><h2>Out in the world</h2><figure class="outcome">'+photo('xenoflora-exhibit.webp','Xenoflora exhibited at FAB2026 in Boston.')+'<figcaption><h3>FAB2026</h3><p>Boston, Massachusetts</p><p class="small">An encounter with Xenoflora beyond the studio.</p></figcaption></figure></section><p class="question">What do you think an alien flower smells like?</p><nav class="next-project" aria-label="More projects"><a href="{base}work/">All work</a><a href="{base}work/tinker-forest/">Tinker Forest</a></nav></div>'
 page('work/xenoflora','Xenoflora Olfacta',xeno,'Work','An artistic exploration of bioplastics and smell: encounter Xenoflora Olfacta, an imagined alien flower.')
 
-tinker=project_header('Tinker Forest','What if we could build a forest together?','Mariana Tamashiro and Andrea Devore.','A collaborative forest grows as visitors make their own light-up creatures. Everyday craft materials and simple electronics invite families to tinker, experiment, and add something of their own.')
+tinker=project_header('Tinker Forest',QUESTIONS['Tinker Forest'],'Mariana Tamashiro and Andrea Devore.','A collaborative forest grows as visitors make their own light-up creatures. Everyday craft materials and simple electronics invite families to tinker, experiment, and add something of their own.')
 tinker+='<div class="project-body">'+photo('tinker-family.webp','A family making creatures together at Tinker Forest.')+'<section class="project-section" id="making" style="margin-top:60px"><h2>Design and fabrication</h2><h3>Making together</h3><p>A shared making table offers craft materials, simple circuits, and examples. Participants create a creature, explore light or vibration, and contribute it to the growing forest.</p><div class="process-block"><div><h3>Small circuits, many possibilities</h3><p>LEDs, batteries, and vibration motors become expressive ingredients. The activity leaves room for visitors to make their own decisions about form and behavior.</p></div>'+photo('tinker-circuit.webp','A handmade creature with a visible coin-cell battery and LEDs.')+'</div></section><section class="project-section"><h2>Out in the world</h2><h3>Maker Faire Denver · 2018</h3><p>A collaborative making experience for families and visitors.</p></section><p class="question">What creature would you add to our forest?</p><nav class="next-project" aria-label="More projects"><a href="{base}work/">All work</a><a href="{base}work/xenoflora/">Xenoflora Olfacta</a></nav></div>'
 page('work/tinker-forest','Tinker Forest',tinker,'Work')
+
+for name, question in PROJECTS:
+    route, symbol = PRESENTATION[name]
+    if route in ('xenoflora', 'tinker-forest'):
+        continue
+    preview = '<p class="breadcrumb"><a href="{base}work/">Work</a> / '+escape(name)+'</p>'
+    preview += f'<header class="project-heading"><h1 class="display">{escape(name)}</h1><p class="project-subtitle">{escape(question)}</p></header>'
+    preview += '<section class="reading project-preview">'+icon(symbol)+'<p class="eyebrow">Project preview</p><p>The full project story and images are being brought into this new portfolio.</p><a href="{base}">Back to the project shelves</a></section>'
+    page('work/'+route, name, preview, 'Work', question)
 
 desk='<header class="page-opening"><h1 class="display">On my desk</h1><p>experiments, fragments, things in progress</p></header><section class="desk" aria-label="A desk of material explorations"><figure class="experiment">'+image('xenoflora-petal.webp','Blue bioplastic material exploration.')+'<figcaption>translucent possibilities<br><a href="{base}work/xenoflora/#design">Bioplastic studies</a></figcaption></figure><figure class="experiment">'+icon('leaf')+'<figcaption>a leaf that lights up<br><a href="{base}work/tinker-forest/">Tinker Forest</a></figcaption></figure><figure class="experiment">'+photo('xenoflora-sketch.webp','Sketches exploring the Xenoflora enclosure and flower.')+'<figcaption>thinking through drawing</figcaption></figure><figure class="experiment">'+icon('mechanism')+'<figcaption>what could move?</figcaption></figure><figure class="experiment">'+photo('illustration-2.webp','Illustrated moments from Kyoto and Tokyo.')+'<figcaption>notes from a shared moment</figcaption></figure><figure class="experiment">'+icon('shell')+'<figcaption>collecting curious forms</figcaption></figure>'+icon('pencil','pencils')+'</section>'
 page('on-my-desk','On my desk',desk,'On my desk')

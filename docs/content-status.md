@@ -30,3 +30,7 @@ Repository created: https://github.com/maritamashiro/portfolio
 First successful deployment verified: https://maritamashiro.github.io/portfolio/
 
 Publishing uses GitHub Actions on main. The custom domain is not connected. The initial downloadable ZIP predates repository creation; the GitHub repository is the current source of truth.
+
+## Selected homepage projects
+
+The eight shelf projects follow `content/portfolio-project-questions.md` in order. Xenoflora and Tinker Forest have full initial pages. Beyond Ornaments, Creature Kit, Teaching IoT, Face Hacking, Immersive Coding, and Talk to Me currently have clearly marked migration previews with their exact questions. The shelf SVG symbols are provisional illustrations.
