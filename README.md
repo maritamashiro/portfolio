@@ -45,7 +45,7 @@ The first version is published at https://maritamashiro.github.io/portfolio/ fro
 
 ## Fonts
 
-Courier Prime Regular/Bold are the text fonts. The display face is the Pastel Crayon TTF supplied by Mariana, replacing the interim Kalam face. Its original font metadata is preserved. Keep font licensing records with the project; the uploaded archive contained the TTF only.
+Courier Prime Regular/Bold are the text fonts. DK Cool Crayon is the display face supplied by Mariana, replacing Pastel Crayon. The supplied license PDF and archive metadata are preserved beside the TTF in `public/fonts/`.
 
 ## Image provenance
 
