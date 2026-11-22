@@ -1,0 +1,26 @@
+[
+  {
+    "asset": "creature-kit-token.webp",
+    "source_page": "https://maritamashiro4.wixsite.com/mariana-tamashiro/creature-kit",
+    "source_image": "https://static.wixstatic.com/media/324ae7_a68980e68b244b59b9b0281a4e84cd46~mv2.png",
+    "treatment": "Resized and WebP encoded; no generated content or background removal."
+  },
+  {
+    "asset": "face-hacking-token.webp",
+    "source_page": "https://maritamashiro4.wixsite.com/mariana-tamashiro/face-hacking",
+    "source_image": "https://static.wixstatic.com/media/324ae7_934877ade70440dc8945b3efc9d85f4d~mv2.png",
+    "treatment": "Resized and WebP encoded; no generated content or background removal."
+  },
+  {
+    "asset": "immersive-coding-token.webp",
+    "source_page": "https://maritamashiro4.wixsite.com/mariana-tamashiro/coding-with-young-kids",
+    "source_image": "https://static.wixstatic.com/media/324ae7_3aeed95223964bc39571eb741a3d330c~mv2.png",
+    "treatment": "Resized and WebP encoded; no generated content or background removal."
+  },
+  {
+    "asset": "teaching-iot-token.webp",
+    "source_page": "https://maritamashiro4.wixsite.com/mariana-tamashiro/research",
+    "source_image": "https://static.wixstatic.com/media/324ae7_6d04ebbf2d27468390c00ced7af32611~mv2.jpg",
+    "treatment": "Resized and WebP encoded; no generated content or background removal."
+  }
+]

@@ -34,3 +34,7 @@ Publishing uses GitHub Actions on main. The custom domain is not connected. The 
 ## Selected homepage projects
 
 The eight shelf projects follow `content/portfolio-project-questions.md` in order. Xenoflora and Tinker Forest have full initial pages. Beyond Ornaments, Creature Kit, Teaching IoT, Face Hacking, Immersive Coding, and Talk to Me currently have clearly marked migration previews with their exact questions. The shelf SVG symbols are provisional illustrations.
+
+## Authentic shelf imagery
+
+Six selected projects use actual project images: Xenoflora (existing cutout), Creature Kit (cardboard creature), Teaching IoT (electronics activity), Face Hacking (recognition experiment), Immersive Coding (projected artwork), and Tinker Forest (light-up creature). New source URLs and image treatments are recorded in `content/project-token-sources.json`. Beyond Ornaments and Talk to Me use their names as temporary tokens until original project images or drawings are supplied. The new photographs retain their original backgrounds and appear as small prints.

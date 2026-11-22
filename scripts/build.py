@@ -68,9 +68,25 @@ PRESENTATION = {
 if set(QUESTIONS) != set(PRESENTATION):
     raise ValueError('Each selected project needs its own route and visual token.')
 
+# Only verified project imagery belongs on the shelves. Missing assets use the project name.
+PROJECT_MEDIA = {
+    'Xenoflora Olfacta': ('xenoflora-cutout.webp', 'cutout'),
+    'Creature Kit': ('creature-kit-token.webp', 'photograph'),
+    'Teaching IoT': ('teaching-iot-token.webp', 'photograph'),
+    'Face Hacking': ('face-hacking-token.webp', 'photograph'),
+    'Immersive Coding': ('immersive-coding-token.webp', 'photograph'),
+    'Tinker Forest': ('tinker-circuit.webp', 'photograph'),
+}
+
+def project_token(name, cls=''):
+    if name in PROJECT_MEDIA:
+        filename, treatment = PROJECT_MEDIA[name]
+        return image(filename, '', 'project-token '+treatment+' '+cls, lazy=False)
+    return f'<span class="word-token {cls}">{escape(name)}</span>'
+
 def shelf_object(name, question):
     route, symbol = PRESENTATION[name]
-    token = icon(symbol) if symbol else image('xenoflora-cutout.webp', '', lazy=False)
+    token = project_token(name)
     label = escape(name+': '+question, quote=True)
     return f'<a class="shelf-object" href="{{base}}work/{route}/" aria-label="{label}">{token}<span class="object-label">{escape(name)}<span class="object-question">{escape(question)}</span></span></a>'
 
@@ -89,8 +105,8 @@ def collection(title, objects):
 
 archive='https://maritamashiro4.wixsite.com/mariana-tamashiro/'
 art=[project_object('Xenoflora Olfacta','work/xenoflora/',image('xenoflora-cutout.webp','','main-token'),'flower','shell'),project_object('Illustrated notes','illustration/live/',icon('paper','main-token'),'flower','pencil')]
-research=[project_object('Xenoflora Olfacta','work/xenoflora/',image('xenoflora-cutout.webp','','main-token'),'eye','paper'),project_object('Hack Facial Recognition — original archive',archive+'face-hacking',icon('eye','main-token'),'pencil','paper')]
-education=[project_object('Tinker Forest','work/tinker-forest/',icon('leaf','main-token'),'creature','paper'),project_object('Creature Kit — original archive',archive+'creature-kit',icon('creature','main-token'),'leaf','pencil'),project_object('Movement Kit — original archive',archive+'movement-kit',icon('mechanism','main-token'),'arrow','paper'),project_object('Mask Kit — original archive',archive+'mask-kit',icon('mask','main-token'),'paper','pencil')]
+research=[project_object('Xenoflora Olfacta','work/xenoflora/',image('xenoflora-cutout.webp','','main-token'),'eye','paper'),project_object('Hack Facial Recognition — original archive',archive+'face-hacking',project_token('Face Hacking','main-token'),'pencil','paper')]
+education=[project_object('Tinker Forest','work/tinker-forest/',project_token('Tinker Forest','main-token'),'creature','paper'),project_object('Creature Kit — original archive',archive+'creature-kit',project_token('Creature Kit','main-token'),'leaf','pencil'),project_object('Movement Kit — original archive',archive+'movement-kit',icon('mechanism','main-token'),'arrow','paper'),project_object('Mask Kit — original archive',archive+'mask-kit',icon('mask','main-token'),'paper','pencil')]
 page('work','Work','<header class="page-opening"><h1 class="display">Work</h1><p>A collection of things I make, explore, and share.</p></header><div class="collections">'+collection('Art',art)+collection('Research',research)+collection('Education',education)+'</div><p class="collection-note">Some projects live between collections. Selected links open the original project archive.</p>','Work')
 
 def project_header(title, subtitle, authors, description):
@@ -111,7 +127,7 @@ for name, question in PROJECTS:
         continue
     preview = '<p class="breadcrumb"><a href="{base}work/">Work</a> / '+escape(name)+'</p>'
     preview += f'<header class="project-heading"><h1 class="display">{escape(name)}</h1><p class="project-subtitle">{escape(question)}</p></header>'
-    preview += '<section class="reading project-preview">'+icon(symbol)+'<p class="eyebrow">Project preview</p><p>The full project story and images are being brought into this new portfolio.</p><a href="{base}">Back to the project shelves</a></section>'
+    preview += '<section class="reading project-preview">'+project_token(name)+'<p class="eyebrow">Project preview</p><p>The full project story and images are being brought into this new portfolio.</p><a href="{base}">Back to the project shelves</a></section>'
     page('work/'+route, name, preview, 'Work', question)
 
 desk='<header class="page-opening"><h1 class="display">On my desk</h1><p>experiments, fragments, things in progress</p></header><section class="desk" aria-label="A desk of material explorations"><figure class="experiment">'+image('xenoflora-petal.webp','Blue bioplastic material exploration.')+'<figcaption>translucent possibilities<br><a href="{base}work/xenoflora/#design">Bioplastic studies</a></figcaption></figure><figure class="experiment">'+icon('leaf')+'<figcaption>a leaf that lights up<br><a href="{base}work/tinker-forest/">Tinker Forest</a></figcaption></figure><figure class="experiment">'+photo('xenoflora-sketch.webp','Sketches exploring the Xenoflora enclosure and flower.')+'<figcaption>thinking through drawing</figcaption></figure><figure class="experiment">'+icon('mechanism')+'<figcaption>what could move?</figcaption></figure><figure class="experiment">'+photo('illustration-2.webp','Illustrated moments from Kyoto and Tokyo.')+'<figcaption>notes from a shared moment</figcaption></figure><figure class="experiment">'+icon('shell')+'<figcaption>collecting curious forms</figcaption></figure>'+icon('pencil','pencils')+'</section>'
