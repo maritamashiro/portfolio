@@ -38,3 +38,16 @@ The eight shelf projects follow `content/portfolio-project-questions.md` in orde
 ## Authentic shelf imagery
 
 Six selected projects use actual project images: Xenoflora (existing cutout), Creature Kit (cardboard creature), Teaching IoT (electronics activity), Face Hacking (recognition experiment), Immersive Coding (projected artwork), and Tinker Forest (light-up creature). New source URLs and image treatments are recorded in `content/project-token-sources.json`. Beyond Ornaments and Talk to Me use their names as temporary tokens until original project images or drawings are supplied. The new photographs retain their original backgrounds and appear as small prints.
+
+## Custom project tokens — 22 November
+
+- Beyond Ornaments: paper ornament cutout from uploaded `12 - papergif4.gif`.
+- Creature Kit: green-bodied creature extracted from `Projects.jpg`; two upper cardboard limbs lift around their brad pivots on hover/focus, with a reduced-motion alternative.
+- Teaching IoT: native SVG sketch based on supplied laptop/lamp photograph; lamp illuminates intermittently.
+- Face Hacking: photo-and-doodle cutout from uploaded `scroobly (2).gif`.
+- Immersive Coding: SVG viewport crops out the original right-side caption.
+- Tinker Forest: main purple creature cutout from `project2_edited.jpg`, including reconstructed missing extremities.
+- Talk to Me: drawn typewriter.
+- Homepage labels show only the exact Markdown question on hover or keyboard focus. Crayon headings and signature have no CSS rotation.
+
+The two uploaded files ending in `.gif` contain single-frame PNG data, not animation. Their current tokens are static pending animated source uploads. Four photographic tokens use AI-assisted extraction/reconstruction and remain separate from documentary photos.

@@ -68,27 +68,43 @@ PRESENTATION = {
 if set(QUESTIONS) != set(PRESENTATION):
     raise ValueError('Each selected project needs its own route and visual token.')
 
-# Only verified project imagery belongs on the shelves. Missing assets use the project name.
+# Photo-derived cutouts are visual tokens; documentary project photos remain unchanged.
 PROJECT_MEDIA = {
     'Xenoflora Olfacta': ('xenoflora-cutout.webp', 'cutout'),
-    'Creature Kit': ('creature-kit-token.webp', 'photograph'),
-    'Teaching IoT': ('teaching-iot-token.webp', 'photograph'),
-    'Face Hacking': ('face-hacking-token.webp', 'photograph'),
-    'Immersive Coding': ('immersive-coding-token.webp', 'photograph'),
-    'Tinker Forest': ('tinker-circuit.webp', 'photograph'),
+    'Beyond Ornaments': ('tokens/beyond-ornaments.webp', 'ornament-cutout'),
+    'Face Hacking': ('tokens/face-scroobly.webp', 'face-cutout'),
+    'Tinker Forest': ('tokens/tinker-cutout.webp', 'tinker-cutout'),
 }
 
 def project_token(name, cls=''):
-    if name in PROJECT_MEDIA:
-        filename, treatment = PROJECT_MEDIA[name]
-        return image(filename, '', 'project-token '+treatment+' '+cls, lazy=False)
-    return f'<span class="word-token {cls}">{escape(name)}</span>'
+    if name == 'Creature Kit':
+        return f'''<svg class="project-token puppet-token {cls}" viewBox="0 0 1536 1080" aria-hidden="true"><defs>
+        <clipPath id="puppet-left"><path d="M0 0H670V200H660Q580 200 580 280V440H0Z"/></clipPath>
+        <clipPath id="puppet-right"><path d="M880 0H1536V440H960V280Q960 200 890 200H880Z"/></clipPath>
+        <clipPath id="puppet-body"><path d="M660 200H890Q960 200 960 280V360Q960 440 880 440H660Q580 440 580 350V280Q580 200 660 200ZM0 440H1536V1080H0Z"/></clipPath>
+        </defs><g class="puppet-arm puppet-left"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-left)"/></g>
+        <g class="puppet-arm puppet-right"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-right)"/></g>
+        <image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-body)"/></svg>'''
+    if name == 'Teaching IoT':
+        return f'''<svg class="drawn project-token iot-sketch {cls}" viewBox="0 0 240 180" aria-hidden="true"><defs><radialGradient id="lamp-halo"><stop stop-color="#ffd36b" stop-opacity=".85"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient></defs>
+        <g class="lamp-light"><ellipse cx="190" cy="66" rx="48" ry="53" fill="url(#lamp-halo)" stroke="none"/><path d="M182 37 169 93 218 93 199 36Z" fill="#ffe29b" opacity=".45" stroke="none"/><ellipse cx="190" cy="34" rx="11" ry="6" fill="#ffd36b" stroke="none"/></g>
+        <path d="m18 57 117-12 10 80-116 4ZM28 65l82-8 7 57-81 4ZM29 129 145 125 162 144 16 151 29 129M17 151l145-7-3 6-139 8Z"/>
+        <path d="m42 74 23-2m-22 10 43-4m-42 12 32-3m-30 11 45-5m-43 13 19-2M42 137l89-6M48 144l93-6M76 146l24-2" stroke-width="1.4"/>
+        <path d="M177 34q-2-15 10-18l20 10-7 16-23-8ZM198 41 211 106l-16 23M182 131q18-10 36 0l-3 5-35 1ZM188 19l9 17M182 22l9 15M203 73l6 26"/>
+        <path d="M140 134q26-43 43-23t32-8M178 110l-5-9 11-2 5 10ZM177 104l6-1" stroke="#6b9586" stroke-width="2"/><path d="M19 161q92-9 202-17" stroke-width="1"/></svg>'''
+    if name == 'Talk to Me':
+        return icon('typewriter', 'project-token typewriter-sketch '+cls)
+    if name == 'Immersive Coding':
+        # ViewBox clips the original right-hand caption without altering the photograph.
+        return f'''<svg class="project-token immersive-token {cls}" viewBox="0 0 650 500" aria-hidden="true"><image href="{{base}}assets/immersive-coding-token.webp" x="-20" y="-20" width="960" height="540"/></svg>'''
+    filename, treatment = PROJECT_MEDIA[name]
+    return image(filename, '', 'project-token '+treatment+' '+cls, lazy=False)
 
 def shelf_object(name, question):
     route, symbol = PRESENTATION[name]
     token = project_token(name)
     label = escape(name+': '+question, quote=True)
-    return f'<a class="shelf-object" href="{{base}}work/{route}/" aria-label="{label}">{token}<span class="object-label">{escape(name)}<span class="object-question">{escape(question)}</span></span></a>'
+    return f'<a class="shelf-object" href="{{base}}work/{route}/" aria-label="{label}">{token}<span class="object-label shelf-question">{escape(question)}</span></a>'
 
 def shelf(items):
     return '<div class="shelf-row">'+''.join(items)+'<svg class="shelf-line" viewBox="0 0 900 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7Q90 2 172 6T350 6T520 7T710 6T898 8M6 9Q180 6 340 8T650 9T894 10" stroke="currentColor" stroke-width="1" fill="none"/></svg></div>'

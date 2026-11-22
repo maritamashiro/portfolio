@@ -22,5 +22,41 @@
     "source_page": "https://maritamashiro4.wixsite.com/mariana-tamashiro/research",
     "source_image": "https://static.wixstatic.com/media/324ae7_6d04ebbf2d27468390c00ced7af32611~mv2.jpg",
     "treatment": "Resized and WebP encoded; no generated content or background removal."
+  },
+  {
+    "asset": "tokens/beyond-ornaments.webp",
+    "source_upload": "12 - papergif4.gif",
+    "source_actual_format": "single-frame PNG",
+    "treatment": "AI-assisted transparent extraction of paper ornament and fibers; overlapping hand removed, small rim reconstructed."
+  },
+  {
+    "asset": "tokens/creature-puppet.webp",
+    "source_upload": "Projects.jpg",
+    "treatment": "AI-assisted extraction of bottom green cardboard creature. Clean alpha exported as WebP, limbs layered in SVG for hover/focus motion."
+  },
+  {
+    "asset": "tokens/face-scroobly.webp",
+    "source_upload": "scroobly (2).gif",
+    "source_actual_format": "single-frame PNG",
+    "treatment": "AI-assisted cutout retaining person and lime/white tracking doodle."
+  },
+  {
+    "asset": "tokens/tinker-cutout.webp",
+    "source_upload": "project2_edited.jpg",
+    "treatment": "AI-assisted main creature extraction with reconstruction of cropped head/paws. Alpha cleaned and WebP optimized."
+  },
+  {
+    "asset": "Teaching IoT native SVG",
+    "source_upload": "CEED IoT Kit DIS Presentation_edited.jpg",
+    "treatment": "Code-native laptop, circuit, and table-lamp sketch, with intermittent glow."
+  },
+  {
+    "asset": "Immersive Coding native SVG viewport",
+    "source_asset": "immersive-coding-token.webp",
+    "treatment": "Viewport crops image to original left portion, excluding right-side annotation."
+  },
+  {
+    "asset": "Talk to Me native SVG",
+    "treatment": "Drawn typewriter token."
   }
 ]
