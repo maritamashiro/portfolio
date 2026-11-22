@@ -27,8 +27,8 @@
 .puppet-left{transform-origin:670px 235px}.puppet-right{transform-origin:870px 235px}
 .puppet-bottom-left{transform-origin:670px 395px}.puppet-bottom-right{transform-origin:880px 395px}
 .puppet-dance{transform-origin:770px 390px}
-.ornament-animation{display:block}.ornament-animation .ornament-live{display:block;width:100%;height:100%;overflow:hidden}.ornament-animation .ornament-still{display:none}
-.shelf-object .ornament-animation{width:125px;height:145px;max-height:145px}
+.ornament-animation{display:block;overflow:hidden;border-radius:3px;background:#292622;transition:transform .25s ease}.ornament-animation .ornament-live{display:block;width:100%;height:100%;overflow:hidden}.ornament-animation .ornament-still{display:none}
+.shelf-object .ornament-animation{width:175px;height:160px;max-height:160px}.shelf-object:hover .ornament-animation,.shelf-object:focus-visible .ornament-animation{transform:scale(1.07)}
 .lamp-light{opacity:0;animation:lamp-thought 11s ease-in-out infinite}
 @keyframes lamp-thought{0%,17%,35%,64%,72%,100%{opacity:0}21%,30%,67%,69%{opacity:1}}
 .project-preview>.project-token{display:block;width:260px;height:220px;max-height:220px;object-fit:contain;margin:0 0 30px}
@@ -36,5 +36,5 @@
 @media(max-width:720px){.shelf-row{padding-bottom:15px}.shelf-object .project-token{width:100px;height:100px;max-height:100px}.shelf-object .puppet-token,.shelf-object .iot-sketch{width:115px}.shelf-object .ornament-cutout{width:80px}.shelf-object .face-cutout{width:88px}.shelf-object .immersive-token{width:95px;height:75px}.shelf-object .object-label{font-size:.7rem;width:155px;max-width:155px;opacity:0}.shelf-object:first-child .object-label{left:0;transform:none}.shelf-object:last-child .object-label{left:auto;right:0;transform:none}.shelf-object:hover .object-label,.shelf-object:focus-visible .object-label{opacity:1}}
 @media(prefers-reduced-motion:reduce){.lamp-light{animation:none;opacity:.4}.puppet-arm{transition:none}.shelf-object:hover .puppet-arm,.shelf-object:focus-visible .puppet-arm,.project-object:hover .puppet-arm,.project-object:focus-visible .puppet-arm{transform:none}}
 
-@media(max-width:720px){.shelf-object .ornament-animation{width:95px;height:110px;max-height:110px}}
+@media(max-width:720px){.shelf-object .ornament-animation{width:105px;height:110px;max-height:110px}}
 @media(prefers-reduced-motion:reduce){.ornament-animation .ornament-live{display:none}.ornament-animation .ornament-still{display:block;width:100%;height:100%;object-fit:contain}}

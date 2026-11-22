@@ -57,3 +57,7 @@ The two uploaded files ending in `.gif` contain single-frame PNG data, not anima
 The ZIP supplied by Mariana preserved the real Beyond Ornaments GIF (34 frames, 3.4 seconds). Its optimized original frames now play inside an SVG with a luminance/color alpha filter; no generated motion was substituted. The source background is removed during rendering, with some fine fibers becoming faint at low contrast. Reduced-motion mode shows the earlier static cutout. Face Hacking still awaits an animated original.
 
 Creature Kit now has four independent SVG limb layers pivoting at the brads. A staggered 3.1-second hover/focus dance includes large lower-limb lifts, smaller upper-limb swings, gentle body bobbing, and a 650 ms settle back to rest. The movement is based on Mariana's “Dance with Patrick” screen recording. Motion pauses when the page is hidden and is disabled for reduced-motion preferences.
+
+## Beyond Ornaments clarity revision
+
+Removed the SVG background/skin filter at Mariana's request: the original hand, full paper texture, shadows, fibers and illumination are now visible. The animation appears as a larger tightly framed moving photograph, with slight enlargement on hover/focus. Reduced-motion mode uses an unfiltered source-frame poster with the same crop. All 34 frames and their 3.4-second loop are retained.

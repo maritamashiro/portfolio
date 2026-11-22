@@ -78,15 +78,9 @@ PROJECT_MEDIA = {
 
 def project_token(name, cls=''):
     if name == 'Beyond Ornaments':
-        # Filter the original moving pixels at render time; preserve its frame timing.
-        return f'''<span class="project-token ornament-animation {cls}"><svg class="ornament-live" viewBox="38 72 178 240" aria-hidden="true"><defs><filter id="ornament-alpha" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 1.8 1.2 0 -0.45" result="luma"/>
-        <feComponentTransfer in="luma" result="light-mask"><feFuncA type="table" tableValues="0 0 .8 1 1"/></feComponentTransfer>
-        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -5 5 0 0 1.4" result="neutral"/>
-        <feComponentTransfer in="neutral" result="neutral-mask"><feFuncA type="discrete" tableValues="0 0 1"/></feComponentTransfer>
-        <feComposite in="light-mask" in2="neutral-mask" operator="in" result="mask"/><feComposite in="SourceGraphic" in2="mask" operator="in"/></filter></defs>
-        <image href="{{base}}assets/tokens/beyond-ornaments-animated.gif" width="240" height="427" filter="url(#ornament-alpha)"/></svg>
-        {image('tokens/beyond-ornaments.webp','','ornament-still')}</span>'''
+        # Keep the original hand, shadows, fibers and light changes fully visible.
+        return f'''<span class="project-token ornament-animation {cls}"><svg class="ornament-live" viewBox="40 90 200 215" aria-hidden="true"><image href="{{base}}assets/tokens/beyond-ornaments-animated.gif" width="240" height="427"/></svg>
+        <svg class="ornament-still" viewBox="40 90 200 215" aria-hidden="true"><image href="{{base}}assets/tokens/beyond-ornaments-poster.webp" width="240" height="427"/></svg></span>'''
     if name == 'Creature Kit':
         return f'''<svg class="project-token puppet-token {cls}" viewBox="0 -180 1536 1400" aria-hidden="true"><defs>
         <clipPath id="puppet-left"><path d="M0 0H670V200H660Q580 200 580 280V440H0Z"/></clipPath>
