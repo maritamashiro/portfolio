@@ -58,5 +58,10 @@
   {
     "asset": "Talk to Me native SVG",
     "treatment": "Drawn typewriter token."
+  },
+  {
+    "asset": "tokens/beyond-ornaments-animated.gif",
+    "source_upload": "12 - papergif4.gif.zip / 12 - papergif4.gif",
+    "treatment": "Original 34-frame 3.4-second animation, resized to 240x427 and palette-optimized. SVG alpha filter removes dark/warm background at display time; source frame motion is preserved. Fine fibers can be faint where source contrast is low. Static extracted poster is used for reduced motion."
   }
 ]

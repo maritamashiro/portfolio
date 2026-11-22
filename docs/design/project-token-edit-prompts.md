@@ -20,4 +20,4 @@ Extract only the main purple light-up creature, preserving googly-eyed head, pur
 
 ## Animation sources
 
-The uploaded files named .gif actually contain one PNG frame each. No original GIF timing or motion was received, so those two tokens remain static. Creature motion and intermittent lamp light are CSS animations, with reduced-motion alternatives.
+The initial files named .gif contained one PNG frame each. The later Beyond Ornaments ZIP preserved 34 real GIF frames, lasting 3.4 seconds, now used in the website with an SVG background alpha filter. Face Hacking remains static pending its animated original. Creature movement uses four independent Web Animations hinge tracks with a settle on exit; the lamp uses intermittent CSS glow. Both include reduced-motion alternatives.

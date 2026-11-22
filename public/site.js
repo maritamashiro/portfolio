@@ -50,3 +50,63 @@ if (carousel) {
   carousel.addEventListener('scroll', () => {clearTimeout(timer);timer=setTimeout(()=>{index=slides.reduce((best,s,i)=>Math.abs(s.offsetLeft-slides[0].offsetLeft-carousel.scrollLeft)<Math.abs(slides[best].offsetLeft-slides[0].offsetLeft-carousel.scrollLeft)?i:best,0);update();},100);});
   update();
 }
+
+
+// Four separate hinges, inspired by Mariana's "Dance with Patrick" recording.
+// Returning from a hover settles from the current pose instead of snapping to rest.
+const puppetMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('.puppet-token').forEach(puppet => {
+  const trigger = puppet.closest('a');
+  if (!trigger) return;
+  let hovered = false;
+  let focused = false;
+  let motions = [];
+  let dancing = false;
+  const limbs = [...puppet.querySelectorAll('[data-limb]')];
+  const body = puppet.querySelector('.puppet-dance');
+  const offsets = [0, .16, .30, .49, .66, .84, 1];
+  const poses = {
+    'upper-left': [0, 24, 15, 31, -4, 13, 0],
+    'upper-right': [0, -18, -29, -12, 4, -23, 0],
+    'lower-left': [0, 64, 78, 9, 48, -5, 0],
+    'lower-right': [0, -77, -61, -15, -52, 5, 0]
+  };
+  function settle() {
+    const targets = [...limbs, body];
+    const current = targets.map(el => getComputedStyle(el).transform);
+    motions.forEach(motion => motion.cancel());
+    motions = [];
+    dancing = false;
+    if (puppetMotionPreference.matches) return;
+    targets.forEach((el, i) => {
+      motions.push(el.animate([{transform: current[i]}, {transform: 'none'}], {
+        duration: 650, easing: 'cubic-bezier(.2,.85,.25,1)', fill: 'none'
+      }));
+    });
+  }
+  function update() {
+    const shouldDance = (hovered || focused) && !puppetMotionPreference.matches && !document.hidden;
+    if (shouldDance === dancing) return;
+    if (!shouldDance) { settle(); return; }
+    motions.forEach(motion => motion.cancel());
+    motions = limbs.map((limb, i) => limb.animate(poses[limb.dataset.limb].map((angle, n) => ({
+      transform: `rotate(${angle}deg)`, offset: offsets[n]
+    })), {duration: 3100, delay: -i * 95, iterations: Infinity, easing: 'cubic-bezier(.4,0,.25,1)'}));
+    motions.push(body.animate([
+      {transform: 'translateY(0px) rotate(0deg)'},
+      {transform: 'translateY(-28px) rotate(-1.4deg)', offset: .29},
+      {transform: 'translateY(8px) rotate(1.1deg)', offset: .65},
+      {transform: 'translateY(0px) rotate(0deg)'}
+    ], {duration: 3100, iterations: Infinity, easing: 'ease-in-out'}));
+    dancing = true;
+  }
+  trigger.addEventListener('pointerenter', e => {if(e.pointerType !== 'touch'){hovered = true;update();}});
+  trigger.addEventListener('pointerleave', () => {hovered = false;update();});
+  trigger.addEventListener('focus', () => {focused = true;update();});
+  trigger.addEventListener('blur', () => {focused = false;update();});
+  puppetMotionPreference.addEventListener('change', () => {
+    if (puppetMotionPreference.matches) settle();
+    update();
+  });
+  document.addEventListener('visibilitychange', update);
+});

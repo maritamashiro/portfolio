@@ -77,14 +77,29 @@ PROJECT_MEDIA = {
 }
 
 def project_token(name, cls=''):
+    if name == 'Beyond Ornaments':
+        # Filter the original moving pixels at render time; preserve its frame timing.
+        return f'''<span class="project-token ornament-animation {cls}"><svg class="ornament-live" viewBox="38 72 178 240" aria-hidden="true"><defs><filter id="ornament-alpha" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 1.8 1.2 0 -0.45" result="luma"/>
+        <feComponentTransfer in="luma" result="light-mask"><feFuncA type="table" tableValues="0 0 .8 1 1"/></feComponentTransfer>
+        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -5 5 0 0 1.4" result="neutral"/>
+        <feComponentTransfer in="neutral" result="neutral-mask"><feFuncA type="discrete" tableValues="0 0 1"/></feComponentTransfer>
+        <feComposite in="light-mask" in2="neutral-mask" operator="in" result="mask"/><feComposite in="SourceGraphic" in2="mask" operator="in"/></filter></defs>
+        <image href="{{base}}assets/tokens/beyond-ornaments-animated.gif" width="240" height="427" filter="url(#ornament-alpha)"/></svg>
+        {image('tokens/beyond-ornaments.webp','','ornament-still')}</span>'''
     if name == 'Creature Kit':
-        return f'''<svg class="project-token puppet-token {cls}" viewBox="0 0 1536 1080" aria-hidden="true"><defs>
+        return f'''<svg class="project-token puppet-token {cls}" viewBox="0 -180 1536 1400" aria-hidden="true"><defs>
         <clipPath id="puppet-left"><path d="M0 0H670V200H660Q580 200 580 280V440H0Z"/></clipPath>
         <clipPath id="puppet-right"><path d="M880 0H1536V440H960V280Q960 200 890 200H880Z"/></clipPath>
-        <clipPath id="puppet-body"><path d="M660 200H890Q960 200 960 280V360Q960 440 880 440H660Q580 440 580 350V280Q580 200 660 200ZM0 440H1536V1080H0Z"/></clipPath>
-        </defs><g class="puppet-arm puppet-left"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-left)"/></g>
-        <g class="puppet-arm puppet-right"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-right)"/></g>
-        <image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-body)"/></svg>'''
+        <clipPath id="puppet-bottom-left"><path d="M0 420H580Q580 440 660 440H770V1080H0Z"/></clipPath>
+        <clipPath id="puppet-bottom-right"><path d="M770 440H880Q960 440 960 420H1536V1080H770Z"/></clipPath>
+        <clipPath id="puppet-body"><path d="M660 200H890Q960 200 960 280V360Q960 440 880 440H660Q580 440 580 350V280Q580 200 660 200Z"/></clipPath>
+        </defs><g class="puppet-dance">
+        <g class="puppet-arm puppet-left" data-limb="upper-left"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-left)"/></g>
+        <g class="puppet-arm puppet-right" data-limb="upper-right"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-right)"/></g>
+        <g class="puppet-arm puppet-bottom-left" data-limb="lower-left"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-bottom-left)"/></g>
+        <g class="puppet-arm puppet-bottom-right" data-limb="lower-right"><image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-bottom-right)"/></g>
+        <image href="{{base}}assets/tokens/creature-puppet.webp" width="1536" height="1024" clip-path="url(#puppet-body)"/></g></svg>'''
     if name == 'Teaching IoT':
         return f'''<svg class="drawn project-token iot-sketch {cls}" viewBox="0 0 240 180" aria-hidden="true"><defs><radialGradient id="lamp-halo"><stop stop-color="#ffd36b" stop-opacity=".85"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient></defs>
         <g class="lamp-light"><ellipse cx="190" cy="66" rx="48" ry="53" fill="url(#lamp-halo)" stroke="none"/><path d="M182 37 169 93 218 93 199 36Z" fill="#ffe29b" opacity=".45" stroke="none"/><ellipse cx="190" cy="34" rx="11" ry="6" fill="#ffd36b" stroke="none"/></g>
