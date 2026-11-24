@@ -85,7 +85,7 @@ document.querySelectorAll('.puppet-token').forEach(puppet => {
     });
   }
   function update() {
-    const shouldDance = (hovered || focused) && !puppetMotionPreference.matches && !document.hidden;
+    const shouldDance = (hovered || focused) && !puppetMotionPreference.matches && !document.hidden && !puppet.closest('.study-paused');
     if (shouldDance === dancing) return;
     if (!shouldDance) { settle(); return; }
     motions.forEach(motion => motion.cancel());
@@ -109,4 +109,16 @@ document.querySelectorAll('.puppet-token').forEach(puppet => {
     update();
   });
   document.addEventListener('visibilitychange', update);
+  document.addEventListener('portfolio:motionchange', update);
+});
+
+// A study-wide pause lets visitors inspect the objects without continuous motion.
+document.querySelectorAll('.study-motion-toggle').forEach(button => {
+  const study = button.closest('.study-cabinet-wrap');
+  button.addEventListener('click', () => {
+    const paused = study.classList.toggle('study-paused');
+    button.setAttribute('aria-pressed', String(paused));
+    button.textContent = paused ? 'Resume motion' : 'Pause motion';
+    document.dispatchEvent(new Event('portfolio:motionchange'));
+  });
 });

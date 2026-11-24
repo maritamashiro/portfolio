@@ -121,6 +121,35 @@ def shelf(items):
 home_shelves = ''.join(shelf([shelf_object(name,question) for name,question in PROJECTS[start:start+3]]) for start in range(0,len(PROJECTS),3))
 page('', 'Home',f'<div class="home"><section class="home-intro"><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="work/">Explore my work</a></section><section class="cabinet" aria-label="Selected projects">{home_shelves}</section></div>')
 
+# A scoped, reviewable study before extending the new material language to all eight projects.
+def study_typewriter():
+    keys=''.join(f'<circle class="type-key key-{row}-{col}" cx="{53+row*5+col*15}" cy="{143+row*13}" r="5.1"/>' for row,count in [(0,10),(1,9),(2,8)] for col in range(count))
+    return f'''<svg class="study-typewriter" viewBox="0 0 240 230" aria-hidden="true"><defs>
+    <linearGradient id="study-machine-paint" x2=".25" y2="1"><stop stop-color="#60615b"/><stop offset="1" stop-color="#30342f"/></linearGradient>
+    <linearGradient id="study-paper-light" x2=".8" y2="1"><stop stop-color="#fffdf6"/><stop offset="1" stop-color="#e5ddcb"/></linearGradient>
+    </defs><g class="type-carriage"><path d="M37 111 205 108 207 119 35 123Z" fill="#4d514b"/><path d="M43 108 203 105" stroke="#272c28" stroke-width="8" stroke-linecap="round"/>
+    <g class="type-sheet"><path d="M67 104 62 23 167 19 180 34 184 104Z" fill="url(#study-paper-light)" stroke="#8a8272" stroke-width="1.2"/><path d="M167 19 166 35 180 34" fill="#d6ccb9" stroke="#8a8272" stroke-width="1"/>
+    <path d="M76 45 149 43M78 52 133 51M80 79 150 77M81 86 143 84" fill="none" stroke="#b7ac98" stroke-width="1"/><text x="78" y="68" font-family="Courier Prime,monospace" font-size="10" fill="#a92a64">What if...</text></g>
+    <path d="M33 104 25 104 25 116 34 116M207 104 217 104 217 116 208 116" fill="#a49c89" stroke="#544f43"/><circle cx="28" cy="110" r="6" fill="#c4b7a0" stroke="#645d4e"/>
+    </g><path d="M41 126 194 123 220 187 21 191Z" fill="url(#study-machine-paint)" stroke="#343b34" stroke-width="2"/><path d="M21 191 220 187 216 202 28 207Z" fill="#252b26" stroke="#242b25"/>
+    <path d="M29 191 212 188M47 130 192 127" fill="none" stroke="#a5a68e" stroke-width="1.4"/><path d="M45 136 192 133 206 180 33 183Z" fill="#2c302b" stroke="#202720"/>
+    <g class="type-keys" fill="#eee8d9" stroke="#afab99" stroke-width="1">{keys}</g><path d="M68 184 177 181 177 186 68 189Z" fill="#d7d0bd" stroke="#827d6b"/>
+    <path d="M35 204 54 204 53 212 36 213ZM185 201 206 200 204 208 186 209Z" fill="#2b2a23"/>
+    <path d="M193 135 201 160M199 146 205 167M43 140 37 161" fill="none" stroke="#959881" opacity=".5" stroke-width=".8"/>
+    </svg>'''
+
+def study_cell(name, number, treatment, token):
+    route=PRESENTATION[name][0]
+    question=QUESTIONS[name]
+    return f'''<a class="study-cell {treatment}" href="{{base}}work/{route}/" aria-label="{escape(name+': '+question,quote=True)}"><span class="specimen-number" aria-hidden="true">{number}</span><span class="specimen-stage"><span class="specimen-floor" aria-hidden="true"></span>{token}</span><span class="specimen-question">{escape(question)}</span></a>'''
+
+study_cells=study_cell('Xenoflora Olfacta','01','study-xeno','<span class="xeno-lift">'+image('xenoflora-cutout.webp','','study-flower',lazy=False)+'</span>')
+study_cells+=study_cell('Creature Kit','02','study-creature',project_token('Creature Kit'))
+study_cells+=study_cell('Talk to Me','03','study-writer',study_typewriter())
+study_frame='''<svg class="study-frame" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width=".75"><path d="M3 5Q240 2 500 5T997 4L996 516Q730 514 500 517T4 515Z"/><path d="M5 495Q240 492 500 496T996 494M4 499Q300 495 600 500T995 498"/><path d="M390 4Q388 250 391 495M693 4Q695 260 692 495"/></g></svg>'''
+study='''<div class="cabinet-study"><section class="study-intro"><p class="study-kicker">a cabinet of possibilities</p><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="{base}">Back to the current portfolio</a></section><section class="study-cabinet-wrap" aria-label="Three objects in a cabinet"><div class="study-toolbar"><span>small objects, curious possibilities</span><button type="button" class="study-motion-toggle" aria-pressed="false">Pause motion</button></div><div class="study-cabinet">'''+study_cells+study_frame+'''</div><p class="study-invitation">Come closer. Each object has a question.</p></section></div>'''
+page('cabinet-study','A shelf of curiosities',study,desc='A cabinet study: three tactile objects from Mariana Tamashiro’s practice, brought to life with small movements.')
+
 def project_object(label, href, main, fragment, second='paper'):
     url = href if href.startswith('https://') else '{base}'+href
     return f'<a class="project-object" href="{url}" aria-label="{label}">{main}{icon(fragment,"fragment")}{icon(second,"fragment second")}<span class="object-label">{label}</span></a>'
