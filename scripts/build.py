@@ -141,14 +141,21 @@ def study_typewriter():
 def study_cell(name, number, treatment, token):
     route=PRESENTATION[name][0]
     question=QUESTIONS[name]
-    return f'''<a class="study-cell {treatment}" href="{{base}}work/{route}/" aria-label="{escape(name+': '+question,quote=True)}"><span class="specimen-number" aria-hidden="true">{number}</span><span class="specimen-stage"><span class="specimen-floor" aria-hidden="true"></span>{token}</span><span class="specimen-question">{escape(question)}</span></a>'''
+    frame='<svg class="study-cell-frame" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true"><path d="M2 3Q145 1 298 3L297 297Q150 295 3 298ZM3 290Q150 288 297 291" fill="none" stroke="currentColor" stroke-width=".7"/></svg>'
+    return f'''<a class="study-cell {treatment}" href="{{base}}work/{route}/" aria-label="{escape(name+': '+question,quote=True)}"><span class="specimen-heading"><span class="specimen-number" aria-hidden="true">{number}</span><span class="specimen-name">{escape(name)}</span></span><span class="specimen-stage"><span class="specimen-floor" aria-hidden="true"></span>{token}</span><span class="specimen-question">{escape(question)}</span>{frame}</a>'''
 
-study_cells=study_cell('Xenoflora Olfacta','01','study-xeno','<span class="xeno-lift">'+image('xenoflora-cutout.webp','','study-flower',lazy=False)+'</span>')
-study_cells+=study_cell('Creature Kit','02','study-creature',project_token('Creature Kit'))
-study_cells+=study_cell('Talk to Me','03','study-writer',study_typewriter())
-study_frame='''<svg class="study-frame" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width=".75"><path d="M3 5Q240 2 500 5T997 4L996 516Q730 514 500 517T4 515Z"/><path d="M5 495Q240 492 500 496T996 494M4 499Q300 495 600 500T995 498"/><path d="M390 4Q388 250 391 495M693 4Q695 260 692 495"/></g></svg>'''
-study='''<div class="cabinet-study"><section class="study-intro"><p class="study-kicker">a cabinet of possibilities</p><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="{base}">Back to the current portfolio</a></section><section class="study-cabinet-wrap" aria-label="Three objects in a cabinet"><div class="study-toolbar"><span>small objects, curious possibilities</span><button type="button" class="study-motion-toggle" aria-pressed="false">Pause motion</button></div><div class="study-cabinet">'''+study_cells+study_frame+'''</div><p class="study-invitation">Come closer. Each object has a question.</p></section></div>'''
-page('cabinet-study','A shelf of curiosities',study,desc='A cabinet study: three tactile objects from Mariana Tamashiro’s practice, brought to life with small movements.')
+study_cells=''
+for i,name in enumerate(QUESTIONS,1):
+    treatment={'Xenoflora Olfacta':'study-xeno','Creature Kit':'study-creature','Talk to Me':'study-writer','Beyond Ornaments':'study-ornament','Face Hacking':'study-face','Teaching IoT':'study-iot','Immersive Coding':'study-immersive','Tinker Forest':'study-tinker'}[name]
+    if name=='Xenoflora Olfacta':
+        token='<span class="xeno-lift">'+image('xenoflora-cutout.webp','','study-flower',lazy=False)+'</span>'
+    elif name=='Talk to Me':
+        token=study_typewriter()
+    else:
+        token=project_token(name)
+    study_cells+=study_cell(name,f'{i:02}',treatment,token)
+study='''<div class="cabinet-study"><section class="study-intro"><p class="study-kicker">a cabinet of possibilities</p><h1 class="display">MARIANA<br>TAMASHIRO</h1><p class="tagline">creative technologist,<br>educator, tinkerer</p><a class="quiet-link" href="{base}">Back to the current portfolio</a></section><section class="study-cabinet-wrap" aria-label="Eight projects in a cabinet"><div class="study-toolbar"><span>small objects, curious possibilities</span><button type="button" class="study-motion-toggle" aria-pressed="false">Pause motion</button></div><div class="study-cabinet">'''+study_cells+'''</div><p class="study-invitation">Come closer. Each object has a question.</p></section></div>'''
+page('cabinet-study','A shelf of curiosities',study,desc='Eight projects in a hand-drawn cabinet of curiosities: art, research, and playful learning by Mariana Tamashiro.')
 
 def project_object(label, href, main, fragment, second='paper'):
     url = href if href.startswith('https://') else '{base}'+href

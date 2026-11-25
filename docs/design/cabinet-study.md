@@ -1,9 +1,11 @@
-# Cabinet study — one shelf
+# Cabinet study — full collection
 
-Review route: `/cabinet-study/`. This is a separate first-shelf direction; the existing homepage and canonical eight-project order are retained.
+Review route: `/cabinet-study/`. The original homepage remains available for comparison.
 
-Three uneven compartments contain Xenoflora Olfacta, Creature Kit, and Talk to Me. Ivory paper grain, very light hand-drawn framing, shared directional shadows, varied scale, small specimen numbers, and generous space give them a common cabinet setting. Main crayon text stays straight. Exact Markdown questions appear on hover/focus.
+All eight projects follow the canonical order in `content/portfolio-project-questions.md`. Square, lightly hand-drawn compartments contain smaller objects with generous space. Desktop uses three columns beside the introduction; narrower layouts put the introduction above the cabinet and adapt to four, three, or two columns.
 
-Xenoflora levitates with a coordinated floor shadow. The actual photo-derived cardboard creature uses its existing four independent brad hinges. A new native SVG develops the existing typewriter sketch with shaded body panels, round keys, and a paper sheet that advances in steps on hover/focus. The illustration is symbolic, not a photograph of the actual project.
+Each compartment has its number and project name together at the top left. The exact project question appears at the bottom on hover or keyboard focus, and stays visible on touch devices. Objects remain links to their project pages.
 
-Pause motion stops automatic movement and settles the creature. Reduced-motion preferences are respected. The study adapts to a full-width cabinet below the introduction on mobile. No reference artwork was copied or added to the site.
+Xenoflora levitates with its floor shadow. Beyond Ornaments retains its circular original animation. Creature Kit moves at four independent brad hinges. Teaching IoT uses the laptop-and-lamp sketch with intermittent light. Face Hacking gently tilts; Immersive Coding enlarges slightly; Tinker Forest gains a soft light. Talk to Me uses the shaded typewriter illustration with stepping paper and moving keys.
+
+Pause motion stops CSS movement, settles the creature, and substitutes the ornament poster for its GIF. Reduced-motion preferences are respected. Main crayon text stays straight; Courier Prime labels and questions use the established ivory, ink, and magenta palette.

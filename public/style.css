@@ -39,7 +39,7 @@
 @media(max-width:720px){.shelf-object .ornament-animation{width:105px;height:105px;max-height:105px}}
 @media(prefers-reduced-motion:reduce){.ornament-animation .ornament-live{display:none}.ornament-animation .ornament-still{display:block;width:100%;height:100%;object-fit:contain}}
 
-/* Cabinet study: scoped first-shelf material and motion language. */
+/* Cabinet study: full collection, square compartments and small objects. */
 .cabinet-study{display:grid;grid-template-columns:minmax(250px,.76fr) minmax(0,1.5fr);gap:5vw;min-height:calc(100svh - 215px);align-items:center;padding:42px 0 55px}
 .study-intro{align-self:center;padding-bottom:45px}.study-kicker{font-size:.73rem;letter-spacing:.09em;color:var(--muted);margin-bottom:22px}.study-intro h1{font-size:clamp(3rem,5.4vw,5.6rem);margin-bottom:25px;line-height:1.07}.study-intro .tagline{font-size:.95rem;line-height:1.5}.study-intro .quiet-link{font-size:.74rem;display:inline-block;margin-top:22px;color:var(--muted)}
 .study-cabinet-wrap{min-width:0}.study-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:.65rem;color:var(--muted);margin-bottom:13px;letter-spacing:.025em}.study-motion-toggle{border:0;background:none;font-size:.65rem;padding:6px 0;text-decoration:underline;text-underline-offset:4px;white-space:nowrap;min-height:32px}
@@ -66,3 +66,36 @@
 @media(max-width:760px){.cabinet-study{grid-template-columns:1fr;gap:35px;padding-top:35px;min-height:auto}.study-intro{padding-bottom:0}.study-intro h1{font-size:clamp(3.1rem,11vw,5rem)}.study-kicker{margin-bottom:14px}.study-intro .quiet-link{margin-top:5px}.study-cabinet,.study-cell{min-height:330px}.study-cell{padding:55px 8px 68px}.specimen-stage{height:210px}.study-xeno .specimen-stage{height:230px}.study-xeno .study-flower{height:205px}.study-creature .puppet-token{height:200px}.study-typewriter{height:155px}.study-cell .specimen-question{font-size:.64rem;left:5%;width:90%;bottom:24px}.study-invitation{font-size:.65rem;text-align:left}.study-toolbar>span{max-width:65%}}
 @media(max-width:420px){.study-cabinet,.study-cell{min-height:285px}.specimen-stage{height:170px}.study-xeno .specimen-stage{height:190px}.study-xeno .study-flower{height:165px}.study-creature .puppet-token{height:165px}.study-typewriter{height:130px}.specimen-number{font-size:.6rem;left:12px;top:12px}}
 @media(prefers-reduced-motion:reduce){.study-xeno .xeno-lift,.study-xeno .specimen-floor,.study-key{animation:none!important}.study-writer:hover .type-sheet,.study-writer:focus-visible .type-sheet,.study-writer:hover .type-carriage,.study-writer:focus-visible .type-carriage{transform:none}.study-motion-toggle{display:none}}
+
+/* Full collection layout. Keep the cabinet and all media inside square cells. */
+.cabinet-study{grid-template-columns:minmax(230px,.68fr) minmax(0,2fr);gap:4vw;align-items:start;padding-top:35px}
+.study-intro{position:sticky;top:80px;align-self:start;padding-top:60px;padding-bottom:0}.study-intro h1{font-size:clamp(2.8rem,4.3vw,4.4rem)}
+.study-cabinet{grid-template-columns:repeat(3,minmax(0,1fr));min-height:0;background:none;gap:0}
+.study-cabinet:before{display:none}
+.study-cell{aspect-ratio:1;min-height:0;padding:0;display:block;background:linear-gradient(115deg,#f5efe344,#e9dfcb18)}
+.study-cell-frame{position:absolute;inset:0;width:100%;height:100%;color:#9a8f7b;pointer-events:none;z-index:2;overflow:visible}
+.specimen-heading{position:absolute;top:15px;left:15px;right:12px;display:flex;align-items:baseline;gap:10px;line-height:1.2;z-index:3}
+.specimen-number{position:static;flex-shrink:0;font-size:.75rem;color:var(--muted)}
+.specimen-name{font-size:.875rem;color:var(--ink);letter-spacing:.015em}
+.study-cell .specimen-stage,.study-xeno .specimen-stage{position:absolute;inset:24% 14% 25%;width:72%;height:51%;align-items:center}
+.study-cell .project-token,.study-cell .study-typewriter{position:relative;display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(2px 5px 3px #302c2422)}
+.study-cell .puppet-token{width:110%;height:110%;max-width:none;max-height:none;overflow:visible}
+.study-xeno .xeno-lift{width:100%;height:100%;margin:0;display:flex;align-items:center;justify-content:center}
+.study-xeno .study-flower{width:100%;height:100%;object-fit:contain}
+.study-ornament .ornament-animation{width:78%;height:auto;aspect-ratio:1;max-height:none;filter:none}
+.study-cell .face-cutout{width:85%;height:100%}
+.study-cell .immersive-token{width:100%;height:80%;overflow:hidden}
+.study-cell .iot-sketch{stroke-width:1.8;filter:none}
+.study-cell .specimen-floor,.study-xeno .specimen-floor,.study-creature .specimen-floor,.study-writer .specimen-floor{bottom:-5px;left:15%;width:70%;height:10px}
+.study-cell .specimen-question{bottom:16px;left:8%;width:84%;font-size:.8125rem;line-height:1.25}
+.study-toolbar,.study-motion-toggle{font-size:.8125rem}.study-invitation{font-size:.8125rem}
+.study-kicker,.study-intro .quiet-link{font-size:.8125rem}
+.study-face:hover .face-cutout,.study-face:focus-visible .face-cutout{transform:rotate(3deg) translateY(-4px);transition:transform .5s}
+.study-tinker:hover .tinker-cutout,.study-tinker:focus-visible .tinker-cutout{filter:drop-shadow(0 0 12px #a6edb288);transition:filter .5s}
+.study-immersive:hover .immersive-token,.study-immersive:focus-visible .immersive-token{transform:scale(1.04);transition:transform .6s}
+.study-paused .ornament-live{display:none}.study-paused .ornament-still{display:block;width:100%;height:100%}
+@media(max-width:1100px){.cabinet-study{grid-template-columns:1fr;gap:30px}.study-intro{position:static;padding-top:0}.study-intro h1{font-size:clamp(3rem,6vw,4.4rem)}.study-cabinet{grid-template-columns:repeat(4,minmax(0,1fr))}.study-intro .quiet-link{margin-top:5px}}
+@media(max-width:900px){.study-cabinet{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){.study-cabinet{grid-template-columns:repeat(2,minmax(0,1fr))}.specimen-heading{top:13px;left:12px;right:9px;gap:7px}.specimen-name{font-size:.8125rem}.specimen-number{font-size:.75rem}.study-cell .specimen-question{font-size:.75rem;bottom:13px;left:6%;width:88%}.study-cell .specimen-stage,.study-xeno .specimen-stage{inset:27% 16% 29%;width:68%;height:44%}.study-toolbar>span{max-width:60%}}
+@media(hover:none){.study-cell .specimen-question{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.study-face:hover .face-cutout,.study-face:focus-visible .face-cutout,.study-immersive:hover .immersive-token,.study-immersive:focus-visible .immersive-token{transform:none}}
